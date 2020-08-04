@@ -2,9 +2,7 @@ package com.manivchuk.tasklist.backendtasklist.controller;
 
 import com.manivchuk.tasklist.backendtasklist.entity.Category;
 import com.manivchuk.tasklist.backendtasklist.repo.CategoryRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,10 @@ public class CategoryController {
     public List<Category> test(){
         return categoryRepository.findAll();
     }
+
+    @PostMapping("/add")
+    public void add(@RequestBody Category category){
+        categoryRepository.save(category);
+    }
+
 }
