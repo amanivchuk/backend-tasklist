@@ -44,12 +44,12 @@ public class TaskController {
 
     @PutMapping("/update")
     public ResponseEntity<Task> update(@RequestBody Task task) {
-        if (task.getId() != null && task.getId() != 0) {
-            return new ResponseEntity("redundant param: id must be null", HttpStatus.NOT_ACCEPTABLE);
-        }
-        if (task.getTitle() == null || task.getTitle().trim().length() == 0) {
-            return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE);
-        }
+//        if (task.getId() != null && task.getId() != 0) {
+//            return new ResponseEntity("redundant param: id must be null", HttpStatus.NOT_ACCEPTABLE);
+//        }
+//        if (task.getTitle() == null || task.getTitle().trim().length() == 0) {
+//            return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE);
+//        }
         taskService.update(task);
 
         return new ResponseEntity(HttpStatus.OK);
@@ -80,6 +80,8 @@ public class TaskController {
     @PostMapping("/search")
     public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues taskSearchValues) {
 
+        imitateLoading();
+
         String title = taskSearchValues.getTitle() != null ? taskSearchValues.getTitle() : null;
 
         Integer completed = taskSearchValues.getCompleted() != null ? taskSearchValues.getCompleted() : null;
@@ -108,5 +110,14 @@ public class TaskController {
 
         // результат запроса
         return ResponseEntity.ok(result);
+    }
+
+    //    имитация загрузки для спиннера
+    private void imitateLoading() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
